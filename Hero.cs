@@ -8,9 +8,8 @@ using System.Xml;
 
 namespace Myspace
 {
-    abstract class Hero
+    public abstract class Hero
     {
-
         public string Name { set; get; }
         public double Health { set; get; }
 
@@ -23,14 +22,14 @@ namespace Myspace
         public double CriticalChance { set; get; }
 
 
-        public Hero(string name, double health, double attackPower, double resistanceToPhysical, double resistanceToMagical, double criticalchance)
+        public Hero(string name, double health, double attackPower, double resistanceToPhysical, double resistanceToMagical, double criticalChance)
         {
             this.Name = name;
             this.Health = health;
             this.AttackPower = attackPower;
             this.ResistanceToPhysical = resistanceToPhysical;
             this.ResistanceToMagical = resistanceToMagical;
-            this.CriticalChance = criticalchance;
+            this.CriticalChance = criticalChance;
         }
 
         public delegate double AttackDelegate(Attack attack, double attackPower);
