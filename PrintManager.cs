@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Myspace
+﻿namespace Myspace
 {
     static class PrintManager
     {
@@ -83,6 +77,33 @@ namespace Myspace
             }
         }
 
+
+
+
+
+
+        public static void printAttackBot(Hero player, Hero bot, double damageDealt)
+        {
+            Console.WriteLine($"Bot {bot.Name} attacks {player.Name} for {damageDealt} damage.");
+            Console.WriteLine($"{player.Name} Health {player.Health}");
+        }
+
+        public static void printDefendsBot(Hero bot)
+        {
+            Console.WriteLine($"Bot {bot.Name} defends and increases resistance.");
+        }
+
+        public static void printWinnerWithBot(Hero player, Hero bot)
+        {
+            if (player.Health <= 0)
+            {
+                Console.WriteLine($"Bot has won the battle! with character {bot.Name}");
+            }
+            else if (bot.Health <= 0)
+            {
+                Console.WriteLine($"palyer has won the battle! with character {player.Name}");
+            }
+        }
 
     }
 }

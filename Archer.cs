@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Myspace
+﻿namespace Myspace
 {
     public class Archer
         : Hero
@@ -13,9 +6,9 @@ namespace Myspace
         public Archer(string name, double health, double attackPower, double resistanceToPhysical, double resistanceToMagical, double criticalChance) : base(name, health, attackPower, resistanceToPhysical, resistanceToMagical, criticalChance)
         {
         }
-        private Random randomShield = new Random();
-        private Random randomCriticalChance = new Random();
-        private Random randomSpecialAttack = new Random();
+        private Random randomShield = new();
+        private Random randomCriticalChance = new();
+        private Random randomSpecialAttack = new();
 
         public override double AttackPow(Attack attack, double attackPower)
         {
@@ -23,7 +16,6 @@ namespace Myspace
             if (shield()) // call the Shield function
             {
                 Console.WriteLine("Shield def all damage!");
-                TotalDamage = 0.0;
                 return 0;
             }
 
@@ -46,7 +38,7 @@ namespace Myspace
         // define the Shield function
         public bool shield()
         {
-            int randomshield = randomShield.Next(1, 100);
+            int randomshield = randomShield.Next(1, 101);
             bool shield = false;
             if (randomshield <= 10)
             {
@@ -63,7 +55,7 @@ namespace Myspace
         // define the CriticalChance function
         public double criticalChance(Attack attack)
         {
-            int randomcriticalchance = randomCriticalChance.Next(1, 100);
+            int randomcriticalchance = randomCriticalChance.Next(1, 101);
 
             double CriticalDamage = 0;
             if (attack == Attack.Physical)

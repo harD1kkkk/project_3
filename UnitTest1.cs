@@ -10,7 +10,7 @@ namespace TestProject1
         public void TestMageMagicalAttack()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 100);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 100);
             double expectedDamage = 235;
 
             // Act
@@ -24,7 +24,7 @@ namespace TestProject1
         public void TestMagePhysicalAttack()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 300);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 300);
             double expectedDamage = 45;
 
             // Act
@@ -38,7 +38,7 @@ namespace TestProject1
         public void TestMageShieldActivated()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 40);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 40);
 
             // Act
             bool shield = mage.shield();
@@ -51,7 +51,7 @@ namespace TestProject1
         public void TestMageCriticalPhysicalAttack()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 300);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 300);
             double expectedDamage = 10;
 
             // Act
@@ -66,7 +66,7 @@ namespace TestProject1
         public void TestMageCriticalMagicalAttack()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 100);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 100);
             double expectedDamage = 60;
 
             // Act
@@ -81,7 +81,7 @@ namespace TestProject1
         public void TestMageSpecialAttack()
         {
             // Arrange
-            Mage mage = new Mage("TestMage", 100, 35, 10, 40, 40);
+            Mage mage = new("TestMage", 100, 35, 10, 40, 40);
             double expectedDamage = 140;
 
             // Act
@@ -101,7 +101,7 @@ namespace TestProject1
         public void TestArcherPhysicalAttack()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 100);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 100);
             double expectedDamage = 200;
 
             // Act
@@ -115,7 +115,7 @@ namespace TestProject1
         public void TestArcherMagicalAttack()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 200);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 200);
             double expectedDamage = 50;
 
             // Act
@@ -129,7 +129,7 @@ namespace TestProject1
         public void TestArcherShieldActivated()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 50);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 50);
 
             // Act
             bool shield = archer.shield();
@@ -142,7 +142,7 @@ namespace TestProject1
         public void TestArcherCriticalPhysicalAttack()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 100);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 100);
             double expectedDamage = 40; // Expected damage when critical chance is high for physical attack
 
             // Act
@@ -156,7 +156,7 @@ namespace TestProject1
         public void TestArcherCriticalMagicalAttack()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 200);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 200);
             double expectedDamage = 10; // Expected damage when critical chance is high for physical attack
 
             // Act
@@ -171,7 +171,7 @@ namespace TestProject1
         public void TestArcherSpecialAttack()
         {
             // Arrange
-            Archer archer = new Archer("TestArcher", 150, 40, 15, 10, 50);
+            Archer archer = new("TestArcher", 150, 40, 15, 10, 50);
             double expectedDamage = 120;
 
             // Act
@@ -191,7 +191,7 @@ namespace TestProject1
         public void TestWarriorPhysicalAttack()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 100);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 100);
             double expectedDamage = 195;
 
             // Act
@@ -206,7 +206,7 @@ namespace TestProject1
         public void TestWarriorMagicalAttack()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 500);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 500);
             double expectedDamage = 75;
 
             // Act
@@ -221,7 +221,7 @@ namespace TestProject1
         public void TestWarriorShieldActivated()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 20);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 20);
 
             // Act
             bool shield = warrior.shield();
@@ -235,7 +235,7 @@ namespace TestProject1
         public void TestWarriorCriticalPhysicalAttack()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 100);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 100);
             double expectedDamage = 60; // Expected damage when critical chance is high for physical attack
 
             // Act
@@ -249,7 +249,7 @@ namespace TestProject1
         public void TestWarriorCriticalMagicalAttack()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 500);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 500);
             double expectedDamage = 30; // Expected damage for a critical magical attack
 
             // Act
@@ -264,7 +264,7 @@ namespace TestProject1
         public void TestWarriorSpecialAttack()
         {
             // Arrange
-            Warrior warrior = new Warrior("TestWarrior", 200, 45, 30, 15, 20);
+            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 20);
             double expectedDamage = 90; // Expected damage for a special physical attack
 
             // Act
