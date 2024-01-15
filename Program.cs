@@ -18,11 +18,12 @@ class Program
 {
     static void Main()
     {
+        
         bool exit = true;
         while (exit)
         {
             Console.WriteLine("Chose player vs palyer - 1 or player vs bot - 2, exit - 3");
-            if (Int32.TryParse(Console.ReadLine(), out int playerChoice) == false || playerChoice == 0 || playerChoice > 2)
+            if (Int32.TryParse(Console.ReadLine(), out int playerChoice) == false || playerChoice == 0 || playerChoice > 3)
             {
                 Console.WriteLine("Error.You entered an incorrect value");
             }

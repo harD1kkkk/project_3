@@ -24,13 +24,13 @@
             {
                 double CriticalDamage = criticalChance(attack); // call the CriticalChance function
                 double damage = specialAttack(attackPower); // call the SpecialAttack function
-                return TotalDamage = attackPower + CriticalDamage + damage;
+                TotalDamage = attackPower + CriticalDamage + damage;
             }
 
             else if (attack == Attack.Magical)
             {
                 double CriticalDamage = criticalChance(attack); // call the CriticalChance function
-                return TotalDamage = attackPower + CriticalDamage;
+                TotalDamage = attackPower + CriticalDamage;
             }
 
             return TotalDamage;

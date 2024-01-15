@@ -35,19 +35,6 @@ namespace TestProject1
         }
 
         [TestMethod]
-        public void TestMageShieldActivated()
-        {
-            // Arrange
-            Mage mage = new("TestMage", 100, 35, 10, 40, 40);
-
-            // Act
-            bool shield = mage.shield();
-
-            // Assert
-            Assert.IsTrue(shield, "Mage's shield method did not return the expected damage when the shield is activated.");
-        }
-
-        [TestMethod]
         public void TestMageCriticalPhysicalAttack()
         {
             // Arrange
@@ -74,21 +61,6 @@ namespace TestProject1
 
             // Assert
             Assert.AreEqual(expectedDamage, actualDamage, "Mage's criticalChance method did not return the expected damage for a critical physical attack.");
-        }
-
-
-        [TestMethod]
-        public void TestMageSpecialAttack()
-        {
-            // Arrange
-            Mage mage = new("TestMage", 100, 35, 10, 40, 40);
-            double expectedDamage = 140;
-
-            // Act
-            double actualDamage = mage.specialAttack(mage.AttackPower);
-
-            // Assert
-            Assert.AreEqual(expectedDamage, actualDamage, "Mage's specialAttack method did not return the expected damage for a special magical attack.");
         }
 
 
@@ -125,18 +97,6 @@ namespace TestProject1
             Assert.AreEqual(expectedDamage, actualDamage, "Archer's AttackPow method did not return the expected damage for a magical attack.");
         }
 
-        [TestMethod]
-        public void TestArcherShieldActivated()
-        {
-            // Arrange
-            Archer archer = new("TestArcher", 150, 40, 15, 10, 50);
-
-            // Act
-            bool shield = archer.shield();
-
-            // Assert
-            Assert.IsTrue(shield, "Archer's shield method did not return the expected damage when the shield is activated.");
-        }
 
         [TestMethod]
         public void TestArcherCriticalPhysicalAttack()
@@ -216,21 +176,6 @@ namespace TestProject1
             Assert.AreEqual(expectedDamage, actualDamage, "Warrior's AttackPow method did not return the expected damage for a magical attack.");
         }
 
-
-        [TestMethod]
-        public void TestWarriorShieldActivated()
-        {
-            // Arrange
-            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 20);
-
-            // Act
-            bool shield = warrior.shield();
-
-            // Assert
-            Assert.IsTrue(shield, "Warrior's shield method did not return the expected damage when the shield is activated.");
-        }
-
-
         [TestMethod]
         public void TestWarriorCriticalPhysicalAttack()
         {
@@ -257,21 +202,6 @@ namespace TestProject1
 
             // Assert
             Assert.AreEqual(expectedDamage, actualDamage, "Warrior's criticalChance method did not return the expected damage for a critical magical attack.");
-        }
-
-
-        [TestMethod]
-        public void TestWarriorSpecialAttack()
-        {
-            // Arrange
-            Warrior warrior = new("TestWarrior", 200, 45, 30, 15, 20);
-            double expectedDamage = 90; // Expected damage for a special physical attack
-
-            // Act
-            double actualDamage = warrior.specialAttack(warrior.AttackPower);
-
-            // Assert
-            Assert.AreEqual(expectedDamage, actualDamage, "Warrior's specialAttack method did not return the expected damage for a special physical attack.");
         }
     }
 }

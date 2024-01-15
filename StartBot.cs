@@ -6,12 +6,15 @@ namespace Myspace
     {
         public static void startBot()
         {
+            Round roundPlayer = new Round();
+            Round roundBot = new Round();
+
             // Create the characters
-            Mage mage1 = new("Mage", 380, 35, 10, 20, 40);
+            Mage mage1 = new("Mage", 500, 35, 10, 20, 40);
             Archer archer1 = new("Archer", 450, 40, 15, 10, 50);
             Warrior warrior1 = new("Warrior", 600, 45, 30, 15, 20);
 
-            Mage mage2 = new("Mage", 380, 35, 10, 20, 40);
+            Mage mage2 = new("Mage", 500, 35, 10, 20, 40);
             Archer archer2 = new("Archer", 450, 40, 15, 10, 50);
             Warrior warrior2 = new("Warrior", 600, 45, 30, 15, 20);
 
@@ -436,6 +439,7 @@ namespace Myspace
                             else if (damageDealt > 0)
                             {
                                 damageDealt -= player.ResistanceToPhysical;
+                                roundBot.PhysicalDamage += damageDealt;
                                 player.Health -= damageDealt;
                             }
 
@@ -455,6 +459,7 @@ namespace Myspace
                             else if (damageDealt > 0)
                             {
                                 damageDealt -= player.ResistanceToMagical;
+                                roundBot.MagicDamage += damageDealt;
                                 player.Health -= damageDealt;
                             }
 
@@ -527,6 +532,7 @@ namespace Myspace
                             else if (damageDealt > 0)
                             {
                                 damageDealt -= bot.ResistanceToPhysical;
+                                roundPlayer.PhysicalDamage += damageDealt;
                                 bot.Health -= damageDealt;
                             }
 
@@ -546,6 +552,7 @@ namespace Myspace
                             else if (damageDealt > 0)
                             {
                                 damageDealt -= bot.ResistanceToMagical;
+                                roundPlayer.MagicDamage += damageDealt;
                                 bot.Health -= damageDealt;
                             }
 
@@ -576,7 +583,7 @@ namespace Myspace
                     countShop++;
 
                     // Declare the winner
-                    PrintManager.printWinnerWithBot(player, bot);
+                    PrintManager.printWinnerWithBot(player, bot, roundPlayer, roundBot);
                 }
 
             }

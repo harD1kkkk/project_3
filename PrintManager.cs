@@ -65,15 +65,21 @@
         }
 
 
-        public static void printWinner(Hero player1, Hero player2)
+        public static void printWinner(Hero player1, Hero player2, Round round1, Round round2)
         {
             if (player1.Health <= 0)
             {
-                Console.WriteLine($"player 2 has won the battle! with character {player2.Name}");
+                Console.WriteLine($"Player 2: has won the battle! with character {player2.Name}");
+                Console.WriteLine($"Player 2: All Physical Damage: {round2.PhysicalDamage} All Magical Damage {round2.MagicDamage}");
+
+                Console.WriteLine($"Player 1: All Physical Damage: {round1.PhysicalDamage} All Magical Damage {round1.MagicDamage}");
             }
             else if (player2.Health <= 0)
             {
-                Console.WriteLine($"palyer 1 has won the battle! with character {player1.Name}");
+                Console.WriteLine($"Palyer 1: has won the battle! with character {player1.Name}");
+                Console.WriteLine($"Player 1: All Physical Damage: {round1.PhysicalDamage} All Magical Damage {round1.MagicDamage}");
+
+                Console.WriteLine($"Player 2: All Physical Damage: {round2.PhysicalDamage} All Magical Damage {round2.MagicDamage}");
             }
         }
 
@@ -93,16 +99,16 @@
             Console.WriteLine($"Bot {bot.Name} defends and increases resistance.");
         }
 
-        public static void printWinnerWithBot(Hero player, Hero bot)
+        public static void printWinnerWithBot(Hero player, Hero bot, Round roundPlayer, Round roundBot)
         {
             if (player.Health <= 0)
             {
                 Console.WriteLine($"Bot has won the battle! with character {bot.Name}");
+                Console.WriteLine($"All Physical Damage: {roundBot.PhysicalDamage} All Magical Damage {roundBot.MagicDamage}");
+                return;
             }
-            else if (bot.Health <= 0)
-            {
-                Console.WriteLine($"palyer has won the battle! with character {player.Name}");
-            }
+            Console.WriteLine($"palyer has won the battle! with character {player.Name}");
+            Console.WriteLine($"All Physical Damage: {roundPlayer.PhysicalDamage} All Magical Damage {roundPlayer.MagicDamage}");
         }
 
     }
