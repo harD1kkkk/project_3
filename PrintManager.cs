@@ -31,8 +31,8 @@
         public static void printMenuAction()
         {
             Console.WriteLine("Choose an action:");
-            Console.WriteLine("1. Attack");
-            Console.WriteLine("2. Defend");
+            Console.WriteLine("1. Attack", Console.ForegroundColor = ConsoleColor.Red);
+            Console.WriteLine("2. Defend", Console.ForegroundColor = ConsoleColor.DarkBlue);Console.ForegroundColor = ConsoleColor.White;
         }
 
         public static void printMenuAttackType()
@@ -105,10 +105,33 @@
             {
                 Console.WriteLine($"Bot has won the battle! with character {bot.Name}");
                 Console.WriteLine($"All Physical Damage: {roundBot.PhysicalDamage} All Magical Damage {roundBot.MagicDamage}");
-                return;
+
+                Console.WriteLine($"Player: All Physical Damage: {roundPlayer.PhysicalDamage} All Magical Damage {roundPlayer.MagicDamage}");
             }
-            Console.WriteLine($"palyer has won the battle! with character {player.Name}");
-            Console.WriteLine($"All Physical Damage: {roundPlayer.PhysicalDamage} All Magical Damage {roundPlayer.MagicDamage}");
+            else if (bot.Health <= 0)
+            {
+                Console.WriteLine($"player has won the battle! with character {player.Name}");
+                Console.WriteLine($"All Physical Damage: {roundPlayer.PhysicalDamage} All Magical Damage {roundPlayer.MagicDamage}");
+
+                Console.WriteLine($"Bot: All Physical Damage: {roundBot.PhysicalDamage} All Magical Damage {roundBot.MagicDamage}");
+            }
+        }
+
+        public static void printStatistic(Hero player)
+        {
+            Console.WriteLine($"Health: {player.Health}", Console.ForegroundColor=ConsoleColor.Green);
+            Console.WriteLine($"Attack Power: {player.AttackPower}", Console.ForegroundColor = ConsoleColor.Red);
+            Console.WriteLine($"Critical chance: {player.CriticalChance}", Console.ForegroundColor = ConsoleColor.Yellow);
+            Console.WriteLine($"Resistance To Physical: {player.ResistanceToPhysical}", Console.ForegroundColor = ConsoleColor.Cyan);
+            Console.WriteLine($"Resistance To Magical: {player.ResistanceToMagical}", Console.ForegroundColor = ConsoleColor.Blue);Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void printMenuPlayer()
+        {
+            Console.WriteLine("Player, choose your character:");
+            Console.WriteLine("1. Mage");
+            Console.WriteLine("2. Archer");
+            Console.WriteLine("3. Warrior");
         }
 
     }

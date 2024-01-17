@@ -19,7 +19,7 @@ namespace Myspace
             Warrior warrior2 = new("Warrior", 600, 45, 30, 15, 20);
 
             // Let the players choose their characters
-            PrintManager.printMenuPlayer1();
+            PrintManager.printMenuPlayer();
 
         repeat0:
             if (Int32.TryParse(Console.ReadLine(), out int player1Choice) == false || player1Choice == 0 || player1Choice > 3)
@@ -83,15 +83,18 @@ namespace Myspace
                 if (battlefield == 1)
                 {
                     Console.WriteLine("Randomly choosed Storm");
+                    Location.Storm(mage1, mage2, archer1, archer2, warrior1, warrior2);
 
                 }
                 else if (battlefield == 2)
                 {
                     Console.WriteLine("Randomly choosed Forest");
+                    Location.Forest(mage1, mage2, archer1, archer2, warrior1, warrior2);
                 }
                 else
                 {
                     Console.WriteLine("Randomly choose Desert");
+                    Location.Desert(mage1, mage2, archer1, archer2, warrior1, warrior2);
                 }
 
             }
@@ -113,150 +116,15 @@ namespace Myspace
                 {
                     case 1:
                         Console.WriteLine("Choosed Storm");
-                        mage1.ResistanceToMagical += 5; // Mage gets extra resistance to magical in storm
-                        mage2.ResistanceToMagical += 5; // Mage gets extra resistance to magical in storm
-
-                        mage1.ResistanceToPhysical += 10; // Mage gets extra damage in storm
-                        mage2.ResistanceToPhysical += 10; // Mage gets extra damage in storm
-
-                        mage1.AttackPower += 10; // Mage gets extra attack power in storm
-                        mage2.AttackPower += 10; // Mage gets extra attack power in storm
-
-                        mage1.Health += 20; // Mage gets extra health in storm
-                        mage2.Health += 20; // Mage gets extra health in storm
-
-                        mage1.CriticalChance += 10; // Mage gets extra critical chance in storm
-                        mage2.CriticalChance += 10; // Mage gets extra critical chance in storm
-
-
-
-                        warrior1.ResistanceToMagical -= 15; // Warrior gets reduced resistance to magical in storm
-                        warrior2.ResistanceToMagical -= 15; // Warrior gets reduced resistance to magical in storm
-
-                        warrior1.ResistanceToPhysical -= 5; // Warrior gets reduced resistance to physical in storm
-                        warrior2.ResistanceToPhysical -= 5; // Warrior gets reduced resistance to physical in storm
-
-                        warrior1.AttackPower += 10; // Warrior gets extra attack power in storm
-                        warrior2.AttackPower += 10; // Warrior gets extra attack power in storm
-
-                        warrior1.Health -= 15; // Warrior gets reduced health in storm
-                        warrior2.Health -= 15; // Warrior gets reduced health in storm
-
-                        warrior1.CriticalChance -= 10; // Warrior gets reduced critical chance in storm
-                        warrior2.CriticalChance -= 10; // Warrior gets reduced critical chance in storm
-
-
-
-                        archer1.ResistanceToMagical -= 5; // Archer gets reduced resistance to magical in storm
-                        archer2.ResistanceToMagical -= 5; // Archer gets reduced resistance to magical in storm
-
-                        archer1.ResistanceToPhysical += 10; // Archer gets extra resistance to physical in storm
-                        archer2.ResistanceToPhysical += 10; // Archer gets extra resistance to physical in storm
-
-                        archer1.AttackPower -= 10; // Archer gets reduced attack power in storm
-                        archer2.AttackPower -= 10; // Archer gets reduced attack power in storm
-
-                        archer1.Health += 20; // Archer gets extra health in storm
-                        archer2.Health += 20; // Archer gets extra health in storm
-
-                        archer1.CriticalChance += 10; // Archer gets extra critical chance in storm
-                        archer2.CriticalChance += 10; // Archer gets extra critical chance in storm
+                        Location.Storm(mage1, mage2, archer1, archer2, warrior1, warrior2);
                         break;
                     case 2:
                         Console.WriteLine("Choosed Forest");
-                        archer1.ResistanceToMagical += 5; // Archer gets extra resistance to magical in forest
-                        archer2.ResistanceToMagical += 5; // Archer gets extra resistance to magical in forest
-
-                        archer1.ResistanceToPhysical -= 10; // Archer gets reduced resistance to physical in forest
-                        archer2.ResistanceToPhysical -= 10; // Archer gets reduced resistance to physical in forest
-
-                        archer1.AttackPower += 15; // Archer gets extra attack power in forest
-                        archer2.AttackPower += 15; // Archer gets extra attack power in forest
-
-                        archer1.Health += 10; // Archer gets extra health in forest
-                        archer2.Health += 10; // Archer gets extra health in forest
-
-                        archer1.CriticalChance += 20; // Archer gets extra critical chance in forest
-                        archer2.CriticalChance += 20; // Archer gets extra critical chance in forest 
-
-
-
-                        warrior1.ResistanceToMagical += 10; // Warrior gets extra resistance to magical in forest
-                        warrior2.ResistanceToMagical += 10; // Warrior gets extra resistance to magical in forest
-
-                        warrior1.ResistanceToPhysical -= 20; // Warrior gets reduced resistance to physical in forest
-                        warrior2.ResistanceToPhysical -= 20; // Warrior gets reduced resistance to physical in forest
-
-                        warrior1.AttackPower += 10; // Warrior gets extra attack power in forest
-                        warrior2.AttackPower += 10; // Warrior gets extra attack power in forest
-
-                        warrior1.Health -= 30; // Warrior gets reduced health in forest
-                        warrior2.Health -= 30; // Warrior gets reduced health in forest
-
-                        warrior1.CriticalChance -= 10; // Warrior gets reduced critical chance in forest
-                        warrior2.CriticalChance -= 10; // Warrior gets reduced critical chance in forest
-
-
-
-
-                        mage1.ResistanceToMagical -= 10; // Mage gets reduced resistance to magical in forest
-                        mage2.ResistanceToMagical -= 10; // Mage gets reduced resistance to magical in forest
-
-                        mage1.ResistanceToPhysical += 10;  // Mage gets extra resistance to physical in forest
-                        mage2.ResistanceToPhysical += 10;  // Mage gets extra resistance to physical in forest
-
-                        mage1.AttackPower -= 5; // Mage gets reduced attack power in forest
-                        mage2.AttackPower -= 5; // Mage gets reduced attack power in forest
-
-                        mage1.Health -= 10; // Mage gets reduced health in forest
-                        mage2.Health -= 10; // Mage gets reduced health in forest
-
-                        mage1.CriticalChance -= 10; // Mage gets reduced critical chance in forest
-                        mage2.CriticalChance -= 10; // Mage gets reduced critical chance in forest
+                        Location.Forest(mage1, mage2, archer1, archer2, warrior1, warrior2);
                         break;
                     case 3:
                         Console.WriteLine("Choosed Desert");
-                        warrior1.ResistanceToPhysical += 10; // Warrior gets extra resistance to physical in desert
-                        warrior2.ResistanceToPhysical += 10; // Warrior gets extra resistance to physical in desert
-
-                        warrior1.AttackPower += 10; // Warrior gets extra attack power in desert
-                        warrior2.AttackPower += 10; // Warrior gets extra attack power in desert
-
-                        warrior1.Health += 10; // Warrior gets extra health in desert
-                        warrior2.Health += 10; // Warrior gets extra health in desert
-
-                        warrior1.ResistanceToMagical -= 10; // Warrior gets reduced resistance to magical in desert
-                        warrior2.ResistanceToMagical -= 10; // Warrior gets reduced resistance to magical in desert
-
-                        warrior1.CriticalChance -= 10; // Warrior gets reduced critical chance in desert
-                        warrior2.CriticalChance -= 10; // Warrior gets reduced critical chance in desert
-
-                        mage1.ResistanceToMagical -= 10; // Mage gets reduced resistance to magical in desert
-                        mage2.ResistanceToMagical -= 10; // Mage gets reduced resistance to magical in desert
-
-                        mage1.AttackPower -= 10; // Mage gets reduced attack power in desert
-                        mage2.AttackPower -= 10; // Mage gets reduced attack power in desert
-
-                        mage1.Health -= 10; // Mage gets reduced health in desert
-                        mage2.Health -= 10; // Mage gets reduced health in desert
-
-                        mage1.ResistanceToPhysical += 10; // Mage gets extra resistance to physical in desert
-                        mage2.ResistanceToPhysical += 10; // Mage gets extra resistance to physical in desert
-
-                        mage1.CriticalChance += 10; // Mage gets extra critical chance in desert
-                        mage2.CriticalChance += 10; // Mage gets extra critical chance in desert
-
-                        archer1.ResistanceToPhysical -= 10; // Archer gets reduced resistance to physical in desert
-                        archer2.ResistanceToPhysical -= 10; // Archer gets reduced resistance to physical in desert
-
-                        archer1.Health -= 10; // Archer gets reduced health in desert
-                        archer2.Health -= 10; // Archer gets reduced health in desert
-
-                        archer1.AttackPower -= 10; // Archer gets reduced attack power in desert
-                        archer2.AttackPower -= 10; // Archer gets reduced attack power in desert
-
-                        archer1.CriticalChance -= 10; // Archer gets reduced critical chance in desert
-                        archer2.CriticalChance -= 10; // Archer gets reduced critical chance in desert
+                        Location.Desert(mage1, mage2, archer1, archer2, warrior1, warrior2);
                         break;
                 }
             }
@@ -281,6 +149,8 @@ namespace Myspace
                 {
                 repeatShop:
                     Console.WriteLine("Player choose 1 item!");
+                    Console.WriteLine("Your statistic");
+                    PrintManager.printStatistic(player);
                     Console.WriteLine("Choose 1 item: 1 - health, 2 - Resistance To Physical, 3 - Resistance To Magical, 4 - Critical chance, 5 - Attack Power");
                     if (Int32.TryParse(Console.ReadLine(), out int choiceShop) == false || choiceShop == 0 || choiceShop > 6)
                     {
@@ -487,8 +357,11 @@ namespace Myspace
                 {
                 // Choose the action for the current player
                 repeat3:
+                    Console.WriteLine("Your statistic");
+                    PrintManager.printStatistic(player);
+                    Console.WriteLine();
                     PrintManager.printMenuAction();
-
+                    
                     if (Int32.TryParse(Console.ReadLine(), out action) == false || action == 0 || action > 2)
                     {
                         Console.WriteLine("Error.You entered an incorrect value");
@@ -538,6 +411,7 @@ namespace Myspace
 
                             //Result
                             PrintManager.printAttackPlayer1(player, bot, damageDealt);
+                            PrintManager.printStatistic(player);
                             Console.WriteLine();
                         }
 
@@ -558,6 +432,7 @@ namespace Myspace
 
                             //Result
                             PrintManager.printAttackPlayer1(player, bot, damageDealt);
+                            PrintManager.printStatistic(player);
                             Console.WriteLine();
                         }
                     }
@@ -574,6 +449,7 @@ namespace Myspace
                         player.ResistanceToPhysical += 5;
                         player.ResistanceToMagical += 5;
                         PrintManager.printDefendsPlayer1(player);
+                        PrintManager.printStatistic(player);
                         Console.WriteLine();
                         count++;
                     }
@@ -581,11 +457,10 @@ namespace Myspace
                     // Switch to the next player
                     currentPlayer = (currentPlayer % 2) + 1;
                     countShop++;
-
-                    // Declare the winner
-                    PrintManager.printWinnerWithBot(player, bot, roundPlayer, roundBot);
                 }
-
+                // Declare the winner
+                PrintManager.printWinnerWithBot(player, bot, roundPlayer, roundBot);
+                Console.WriteLine();
             }
         }
     }

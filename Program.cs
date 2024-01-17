@@ -22,7 +22,10 @@ class Program
         bool exit = true;
         while (exit)
         {
-            Console.WriteLine("Chose player vs palyer - 1 or player vs bot - 2, exit - 3");
+            Console.WriteLine("Make your choice:");
+            Console.WriteLine("player vs player - 1");
+            Console.WriteLine("player vs bot - 2");
+            Console.WriteLine("exit - 3");
             if (Int32.TryParse(Console.ReadLine(), out int playerChoice) == false || playerChoice == 0 || playerChoice > 3)
             {
                 Console.WriteLine("Error.You entered an incorrect value");
