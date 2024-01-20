@@ -25,8 +25,10 @@ class Program
             Console.WriteLine("Make your choice:");
             Console.WriteLine("player vs player - 1");
             Console.WriteLine("player vs bot - 2");
-            Console.WriteLine("exit - 3");
-            if (Int32.TryParse(Console.ReadLine(), out int playerChoice) == false || playerChoice == 0 || playerChoice > 3)
+            Console.WriteLine("bot vs bot - 3");
+            Console.WriteLine("Levels - 4");
+            Console.WriteLine("exit - 5");
+            if (Int32.TryParse(Console.ReadLine(), out int playerChoice) == false || playerChoice == 0 || playerChoice > 5)
             {
                 Console.WriteLine("Error.You entered an incorrect value");
             }
@@ -37,6 +39,14 @@ class Program
             else if(playerChoice == 2) 
             {
                 StartBot.startBot();
+            }
+            else if (playerChoice == 3)
+            {
+                BotVsBot.botvsbot();
+            }
+            else if (playerChoice == 4)
+            {
+                Levels.levels();
             }
             else
             {

@@ -11,8 +11,4 @@
     <EditorConfigFiles Remove="C:\Users\student\Desktop\Student files\CommandOS\project_3\project_3\.editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="C:\Users\student\Desktop\Student files\CommandOS\project_3\project_3\.editorconfig" />
-  </ItemGroup>
-
 </Project>

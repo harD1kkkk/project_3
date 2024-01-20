@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace Myspace
+﻿namespace Myspace
 {
      static class Location 
     {

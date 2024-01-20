@@ -6,8 +6,8 @@ namespace Myspace
     {
         public static void startPlayer()
         {
-            Round round1 = new Round();
-            Round round2 = new Round();
+            Round round1 = new();
+            Round round2 = new();
             // Create the characters
             Mage mage1 = new("Mage", 500, 35, 10, 20, 40);
             Archer archer1 = new("Archer", 450, 40, 15, 10, 50);
@@ -141,124 +141,60 @@ namespace Myspace
 
             // Choose the first player randomly
             int currentPlayer = random.Next(1, 3);
+            int countShop = 0;
             int count1 = 0;
             int count2 = 0;
-            int countShop = 0;
+
             while (player1?.Health > 0 && player2?.Health > 0)
             {
+                double damageDealt;
+                Attack selectedAttack;
                 if (countShop == 5)
                 {
-                repeatShop1:
-                    Console.WriteLine("Player 1 choose 1 item!");
-                    Console.WriteLine("Choose 1 item: 1 - health, 2 - Resistance To Physical, 3 - Resistance To Magical, 4 - Critical chance, 5 - Attack Power");
-                    if (Int32.TryParse(Console.ReadLine(), out int choiceShop1) == false || choiceShop1 == 0 || choiceShop1 > 6)
-                    {
-                        Console.WriteLine("Error.You entered an incorrect value");
-                        goto repeatShop1;
-                    }
-                    if (choiceShop1 == 1)
-                    {
-                        player1.Health += 20;
-                        Console.WriteLine("You choosed: +20 health");
-                    }
-                    else if (choiceShop1 == 2)
-                    {
-                        player1.ResistanceToPhysical += 3;
-                        Console.WriteLine("You choosed: +3 Resistance To Physical");
-                    }
-                    else if (choiceShop1 == 3)
-                    {
-                        player1.ResistanceToMagical += 3;
-                        Console.WriteLine("You choosed: +3 Resistance To Magical");
-                    }
-                    else if (choiceShop1 == 4)
-                    {
-                        player1.CriticalChance += 15;
-                        Console.WriteLine("You choosed: +15 Critical chance");
-                    }
-                    else if (choiceShop1 == 5)
-                    {
-                        player1.AttackPower += 10;
-                        Console.WriteLine("You choosed: +10 Attack Power");
-                    }
-
-
-                repeatShop2:
-                    Console.WriteLine("Player 2 choose 1 item!");
-                    Console.WriteLine("Choose 1 item: 1 - health, 2 - Resistance To Physical, 3 - Resistance To Magical, 4 - Critical chance, 5 - Attack Power");
-                    if (Int32.TryParse(Console.ReadLine(), out int choiceShop2) == false || choiceShop2 == 0 || choiceShop2 > 6)
-                    {
-                        Console.WriteLine("Error.You entered an incorrect value");
-                        goto repeatShop2;
-                    }
-                    if (choiceShop2 == 1)
-                    {
-                        player2.Health += 20;
-                        Console.WriteLine("You choosed: +20 health");
-                    }
-                    else if (choiceShop2 == 2)
-                    {
-                        player2.ResistanceToPhysical += 3;
-                        Console.WriteLine("You choosed: +3 Resistance To Physical");
-                    }
-                    else if (choiceShop2 == 3)
-                    {
-                        player2.ResistanceToMagical += 3;
-                        Console.WriteLine("You choosed: +3 Resistance To Magical");
-                    }
-                    else if (choiceShop2 == 4)
-                    {
-                        player2.CriticalChance += 15;
-                        Console.WriteLine("You choosed: +15 Critical chance");
-                    }
-                    else if (choiceShop2 == 5)
-                    {
-                        player2.AttackPower += 10;
-                        Console.WriteLine("You choosed: +10 Attack Power");
-                    }
+                    PrintManager.ShopMenuPlayervsPlayer(player1, player2);
                     countShop = 0;
                 }
+
                 Console.WriteLine("Current player: " + currentPlayer);
 
-            // Choose the action for the current player
-            repeat4:
-                PrintManager.printMenuAction();
-
-                if (Int32.TryParse(Console.ReadLine(), out int action) == false || action == 0 || action > 2)
+                if (currentPlayer == 1)
                 {
-                    Console.WriteLine("Error.You entered an incorrect value");
-                    goto repeat4;
-                }
+                repeat4:
+                    Console.WriteLine("Your statistic");
+                    PrintManager.printStatistic(player1);
+                    Console.WriteLine();
+                    PrintManager.printMenuAction();
 
-                Console.WriteLine();
-
-                if (action == 1) // Attack
-                {
-                // Choose the attack type 
-                repeat5:
-                    PrintManager.printMenuAttackType();
-
-                    if (Int32.TryParse(Console.ReadLine(), out int AttackType) == false || AttackType == 0 || AttackType > 2)
+                    if (Int32.TryParse(Console.ReadLine(), out int action) == false || action == 0 || action > 2)
                     {
                         Console.WriteLine("Error.You entered an incorrect value");
-                        goto repeat5;
+                        goto repeat4;
                     }
 
-                    Attack selectedAttack;
+                    Console.WriteLine();
 
-                    if (AttackType == 1)
-                    {
-                        selectedAttack = Attack.Physical;
-                    }
-                    else
-                    {
-                        selectedAttack = Attack.Magical;
-                    }
 
-                    // Calculate the damage dealt by the current player
-                    double damageDealt;
-                    if (currentPlayer == 1)
+                    if (action == 1)
                     {
+                    repeat5:
+                        PrintManager.printMenuAttackType();
+
+                        if (Int32.TryParse(Console.ReadLine(), out int AttackType) == false || AttackType == 0 || AttackType > 2)
+                        {
+                            Console.WriteLine("Error.You entered an incorrect value");
+                            goto repeat5;
+                        }
+
+                        if (AttackType == 1)
+                        {
+                            selectedAttack = Attack.Physical;
+                        }
+                        else
+                        {
+                            selectedAttack = Attack.Magical;
+                        }
+
+
 
                         if (selectedAttack == Attack.Physical)
                         {
@@ -300,10 +236,59 @@ namespace Myspace
                         }
                     }
 
-
-
-                    else if (currentPlayer == 2)
+                    else if (action == 2) // Defend
                     {
+                        // Increase the resistance of the current player
+                        if (count1 == 3)
+                        {
+                            Console.WriteLine("You have reached the limit");
+                            goto repeat4;
+                        }
+                        player1.ResistanceToPhysical += 5;
+                        player1.ResistanceToMagical += 5;
+                        PrintManager.printDefendsPlayer1(player1);
+                        count1++;
+                        Console.WriteLine();
+                    }
+                }
+
+
+
+                else if (currentPlayer == 2)
+                {
+                repeat6:
+                    Console.WriteLine("Your statistic");
+                    PrintManager.printStatistic(player2);
+                    Console.WriteLine();
+                    PrintManager.printMenuAction();
+
+                    if (Int32.TryParse(Console.ReadLine(), out int action) == false || action == 0 || action > 2)
+                    {
+                        Console.WriteLine("Error.You entered an incorrect value");
+                        goto repeat6;
+                    }
+
+                    Console.WriteLine();
+                    if (action == 1)
+                    {
+                    repeat7:
+                        PrintManager.printMenuAttackType();
+
+                        if (Int32.TryParse(Console.ReadLine(), out int AttackType) == false || AttackType == 0 || AttackType > 2)
+                        {
+                            Console.WriteLine("Error.You entered an incorrect value");
+                            goto repeat7;
+                        }
+
+                        if (AttackType == 1)
+                        {
+                            selectedAttack = Attack.Physical;
+                        }
+                        else
+                        {
+                            selectedAttack = Attack.Magical;
+                        }
+
                         if (selectedAttack == Attack.Physical)
                         {
                             damageDealt = player2.AttackPow(selectedAttack, player2.AttackPower);
@@ -343,30 +328,14 @@ namespace Myspace
                             Console.WriteLine();
                         }
                     }
-                }
 
-                else if (action == 2) // Defend
-                {
-                    // Increase the resistance of the current player
-                    if (currentPlayer == 1)
+                    else if (action == 2) // Defend
                     {
-                        if (count1 > 3)
+                        // Increase the resistance of the current player
+                        if (count2 == 3)
                         {
                             Console.WriteLine("You have reached the limit");
-                            goto repeat4;
-                        }
-                        player1.ResistanceToPhysical += 5;
-                        player1.ResistanceToMagical += 5;
-                        PrintManager.printDefendsPlayer1(player1);
-                        count1++;
-                        Console.WriteLine();
-                    }
-                    else if (currentPlayer == 2)
-                    {
-                        if (count2 > 3)
-                        {
-                            Console.WriteLine("You have reached the limit");
-                            goto repeat4;
+                            goto repeat6;
                         }
                         player2.ResistanceToPhysical += 5;
                         player2.ResistanceToMagical += 5;
@@ -384,6 +353,8 @@ namespace Myspace
                 // Declare the winner
                 PrintManager.printWinner(player1, player2, round1, round2);
                 Console.WriteLine();
+
+
             }
         }
     }
