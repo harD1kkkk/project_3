@@ -42,7 +42,7 @@ namespace Myspace
             {
                 action = 1;
             }
-            else { action = 2; }
+            else { action = 1; }
             return action;
         }
 
@@ -206,27 +206,27 @@ namespace Myspace
             int botchoiceshop = botChoiceShop.Next(1, 3);
             if (bot.Health <= 100)
             {
-                Console.WriteLine("Bot choosed: +20 health");
+                Console.WriteLine("Bot choosed: +20 health", Console.ForegroundColor = ConsoleColor.Green); Console.ForegroundColor = ConsoleColor.White;
                 bot.Health += 20;
             }
             else if (bot.ResistanceToPhysical <= 10)
             {
-                Console.WriteLine("Bot choosed: +3 Resistance To Physical");
+                Console.WriteLine("Bot choosed: +3 Resistance To Physical", Console.ForegroundColor = ConsoleColor.Cyan); Console.ForegroundColor = ConsoleColor.White;
                 bot.ResistanceToPhysical += 3;
             }
             else if (bot.ResistanceToMagical <= 10)
             {
-                Console.WriteLine("Bot choosed: +3 Resistance To Magical");
+                Console.WriteLine("Bot choosed: +3 Resistance To Magical", Console.ForegroundColor = ConsoleColor.Blue); Console.ForegroundColor = ConsoleColor.White;
                 bot.ResistanceToMagical += 3;
             }
             else if (botchoiceshop <= 50)
             {
-                Console.WriteLine("Bot choosed: +15 Critical chance");
+                Console.WriteLine("Bot choosed: +15 Critical chance", Console.ForegroundColor = ConsoleColor.Yellow); Console.ForegroundColor = ConsoleColor.White;
                 bot.CriticalChance += 15;
             }
             else if (botchoiceshop > 50)
             {
-                Console.WriteLine("Bot choosed: +10 Attack Power");
+                Console.WriteLine("Bot choosed: +10 Attack Power", Console.ForegroundColor = ConsoleColor.Red); Console.ForegroundColor = ConsoleColor.White;
                 bot.AttackPower += 10;
             }
         }
