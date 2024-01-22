@@ -197,7 +197,23 @@ namespace Myspace
             return selectedAttack;
         }
 
+        public static Attack botLogicChoiceBoss()
+        {
+            Attack selectedAttack;
 
+            Random botChoiceAttack = new();
+            int botchoiceattack = botChoiceAttack.Next(1, 101);
+            if (botchoiceattack <= 50)
+            {
+                selectedAttack = Attack.Physical;
+            }
+            else
+            {
+                selectedAttack = Attack.Magical;
+            }
+
+            return selectedAttack;
+        }
 
 
         public static void botLogicShop(Hero bot)
