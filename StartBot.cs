@@ -135,13 +135,13 @@
             // Choose the first player randomly
             int currentPlayer = random.Next(1, 3);
             int count = 0;
+            int countBot = 0;
             int countShop = 0;
             while (player?.Health > 0 && bot?.Health > 0)
             {
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
 
                 if (countShop == 5)
                 {
@@ -153,69 +153,28 @@
 
                 if (currentPlayer == 2)
                 {
-                    action = BotLogic.botLogicVSPlayer(player, bot);
+                    if (countBot == 3)
+                    {
+                        action = 1;
+                    }
+                    else
+                    {
+                        action = BotLogic.botLogicVSPlayer(player, bot);
+                    }
+
                     if (action == 1)
                     {
-                        if (bot == mage2)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceMage(bot);
-                        }
-                        else if (bot == archer2)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceArcher(bot);
-                        }
-                        else
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceWarrior(bot);
-                        }
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackTypeBot(bot, mage2, archer2);
+                        PrintManager.printActionBot(selectedAttack, bot, player, roundBot);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot.ResistanceToPhysical += 5;
-                        bot.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot);
                         PrintManager.printDefendsBot(bot);
                         Console.WriteLine();
+                        countBot++;
 
                     }
                 }
@@ -250,58 +209,8 @@
                             Console.WriteLine("Error.You entered an incorrect value");
                             goto repeat4;
                         }
-
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
-
-                        // Calculate the damage dealt by the current player
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToPhysical;
-                                roundPlayer.PhysicalDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToMagical;
-                                roundPlayer.MagicDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
+                        PrintManager.printActionPlayer(selectedAttack, player, bot, roundPlayer);
                     }
 
                     else if (action == 2) // Defend
@@ -313,8 +222,7 @@
                             goto repeat3;
                         }
 
-                        player.ResistanceToPhysical += 5;
-                        player.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player);
                         PrintManager.printDefendsPlayer1(player);
                         PrintManager.printStatistic(player);
                         Console.WriteLine();

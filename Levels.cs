@@ -13,7 +13,7 @@ namespace Myspace
             int countLevel = 0;
 
             // Create the characters
-            Mage mage1 = new("Mage", 500, 50, 10, 20, 40);
+            Mage mage1 = new("Mage", 500, 300, 10, 20, 40);
             Archer archer1 = new("Archer", 450, 45, 15, 10, 50);
             Warrior warrior1 = new("Warrior", 600, 55, 30, 15, 20);
 
@@ -40,7 +40,7 @@ namespace Myspace
                     player = warrior1;
                     break;
             }
-            countLevel = 1;
+            countLevel = 5;
 
             while (countLevel <= 6)
             {
@@ -167,7 +167,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                     PrintManager.ShopMenuBot(player, bot);
@@ -191,50 +190,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceMage(bot);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot, player, roundBot);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-                        bot.ResistanceToPhysical += 5;
-                        bot.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot);
                         PrintManager.printDefendsBot(bot);
                         countBot++;
                         Console.WriteLine();
@@ -273,57 +235,8 @@ namespace Myspace
                             goto repeat2;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
-
-                        // Calculate the damage dealt by the current player
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToPhysical;
-                                roundPlayer.PhysicalDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToMagical;
-                                roundPlayer.MagicDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
+                        PrintManager.printActionPlayer(selectedAttack, player, bot, roundPlayer);
                     }
 
                     else if (action == 2) // Defend
@@ -335,14 +248,14 @@ namespace Myspace
                             goto repeat1;
                         }
 
-                        player.ResistanceToPhysical += 5;
-                        player.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player);
                         PrintManager.printDefendsPlayer1(player);
                         PrintManager.printStatistic(player);
                         Console.WriteLine();
                         count++;
                     }
                 }
+
                 // Switch to the next player
                 currentPlayer = (currentPlayer % 2) + 1;
                 countShop++;
@@ -381,7 +294,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                     PrintManager.ShopMenuBot(player, bot);
@@ -404,51 +316,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceArcher(bot);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot, player, roundBot);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot.ResistanceToPhysical += 5;
-                        bot.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot);
                         PrintManager.printDefendsBot(bot);
                         countBot++;
                         Console.WriteLine();
@@ -487,57 +361,8 @@ namespace Myspace
                             goto repeat2;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
-
-                        // Calculate the damage dealt by the current player
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToPhysical;
-                                roundPlayer.PhysicalDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToMagical;
-                                roundPlayer.MagicDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
+                        PrintManager.printActionPlayer(selectedAttack, player, bot, roundPlayer);
                     }
 
                     else if (action == 2) // Defend
@@ -549,8 +374,7 @@ namespace Myspace
                             goto repeat1;
                         }
 
-                        player.ResistanceToPhysical += 5;
-                        player.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player);
                         PrintManager.printDefendsPlayer1(player);
                         PrintManager.printStatistic(player);
                         Console.WriteLine();
@@ -595,7 +419,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                     PrintManager.ShopMenuBot(player, bot);
@@ -618,51 +441,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceWarrior(bot);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot, player, roundBot);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot.ResistanceToPhysical += 5;
-                        bot.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot);
                         PrintManager.printDefendsBot(bot);
                         countBot++;
                         Console.WriteLine();
@@ -701,57 +486,8 @@ namespace Myspace
                             goto repeat2;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
-
-                        // Calculate the damage dealt by the current player
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToPhysical;
-                                roundPlayer.PhysicalDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToMagical;
-                                roundPlayer.MagicDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
+                        PrintManager.printActionPlayer(selectedAttack, player, bot, roundPlayer);
                     }
 
                     else if (action == 2) // Defend
@@ -762,9 +498,7 @@ namespace Myspace
                             Console.WriteLine("You have reached the limit");
                             goto repeat1;
                         }
-
-                        player.ResistanceToPhysical += 5;
-                        player.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player);
                         PrintManager.printDefendsPlayer1(player);
                         PrintManager.printStatistic(player);
                         Console.WriteLine();
@@ -812,7 +546,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                 repeatShop:
@@ -845,10 +578,6 @@ namespace Myspace
 
                 if (currentPlayer == 2)
                 {
-                    if (bot1?.Health <= 0)
-                    {
-                        currentPlayer = 3;
-                    }
                     if (countBot1 == 3)
                     {
                         action = 1;
@@ -862,51 +591,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceMage(bot1);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot1.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot1, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot1.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot1, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot1, player, roundBot1);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot1.ResistanceToPhysical += 5;
-                        bot1.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot1);
                         PrintManager.printDefendsBot(bot1);
                         countBot1++;
                         Console.WriteLine();
@@ -916,10 +607,6 @@ namespace Myspace
 
                 else if (currentPlayer == 3)
                 {
-                    if (bot2?.Health <= 0)
-                    {
-                        currentPlayer = 2;
-                    }
 
                     if (countBot2 == 3)
                     {
@@ -934,58 +621,20 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceArcher(bot2);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot2.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot2, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot2.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot2, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot2, player, roundBot2);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot2.ResistanceToPhysical += 5;
-                        bot2.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot2);
                         PrintManager.printDefendsBot(bot2);
                         countBot2++;
                         Console.WriteLine();
                     }
                 }
 
-                else
+                else if (currentPlayer == 1)
                 {
                 // Choose the action for the current player
                 repeat1:
@@ -1042,58 +691,8 @@ namespace Myspace
                                 Console.WriteLine("Error.You entered an incorrect value");
                                 goto repeat2;
                             }
-
-                            if (AttackType == 1)
-                            {
-                                selectedAttack = Attack.Physical;
-                            }
-                            else
-                            {
-                                selectedAttack = Attack.Magical;
-                            }
-
-                            // Calculate the damage dealt by the current player
-
-                            if (selectedAttack == Attack.Physical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot1.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot1.ResistanceToPhysical;
-                                    roundPlayer.PhysicalDamage += damageDealt;
-                                    bot1.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot1, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
-
-
-                            else if (selectedAttack == Attack.Magical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot1.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot1.ResistanceToMagical;
-                                    roundPlayer.MagicDamage += damageDealt;
-                                    bot1.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot1, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
+                            selectedAttack = PrintManager.printAttackType(AttackType);
+                            PrintManager.printActionPlayer(selectedAttack, player, bot1, roundPlayer);
                         }
 
                         else if (action == 2) // Defend
@@ -1104,9 +703,7 @@ namespace Myspace
                                 Console.WriteLine("You have reached the limit");
                                 goto repeat1;
                             }
-
-                            player.ResistanceToPhysical += 5;
-                            player.ResistanceToMagical += 5;
+                            PrintManager.printDefend(player);
                             PrintManager.printDefendsPlayer1(player);
                             PrintManager.printStatistic(player);
                             Console.WriteLine();
@@ -1142,58 +739,8 @@ namespace Myspace
                                 Console.WriteLine("Error.You entered an incorrect value");
                                 goto repeat2;
                             }
-
-                            if (AttackType == 1)
-                            {
-                                selectedAttack = Attack.Physical;
-                            }
-                            else
-                            {
-                                selectedAttack = Attack.Magical;
-                            }
-
-                            // Calculate the damage dealt by the current player
-
-                            if (selectedAttack == Attack.Physical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot2.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot2.ResistanceToPhysical;
-                                    roundPlayer.PhysicalDamage += damageDealt;
-                                    bot2.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot2, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
-
-
-                            else if (selectedAttack == Attack.Magical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot2.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot2.ResistanceToMagical;
-                                    roundPlayer.MagicDamage += damageDealt;
-                                    bot2.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot2, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
+                            selectedAttack = PrintManager.printAttackType(AttackType);
+                            PrintManager.printActionPlayer(selectedAttack, player, bot2, roundPlayer);
                         }
 
                         else if (action == 2) // Defend
@@ -1204,9 +751,7 @@ namespace Myspace
                                 Console.WriteLine("You have reached the limit");
                                 goto repeat1;
                             }
-
-                            player.ResistanceToPhysical += 5;
-                            player.ResistanceToMagical += 5;
+                            PrintManager.printDefend(player);
                             PrintManager.printDefendsPlayer1(player);
                             PrintManager.printStatistic(player);
                             Console.WriteLine();
@@ -1216,7 +761,49 @@ namespace Myspace
                 }
 
                 // Switch to the next player
-                currentPlayer = (currentPlayer % 3) + 1;
+                if (bot1?.Health > 0 && bot2?.Health > 0)
+                {
+                    currentPlayer = (currentPlayer % 3) + 1;
+                }
+
+                else if ((currentPlayer == 1 && bot1?.Health <= 0) || (currentPlayer == 2 && bot2?.Health <= 0))
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+
+                else if (currentPlayer == 3 && bot1?.Health <= 0)
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+                else if (currentPlayer == 2 && bot1?.Health <= 0)
+                {
+                    if ((currentPlayer % 2) + 1 == 1)
+                    {
+                        currentPlayer = 3;
+                    }
+                }
+
+
+
+                else if (currentPlayer == 3 && bot2?.Health <= 0)
+                {
+                    if ((currentPlayer % 2) + 1 == 2)
+                    {
+                        currentPlayer = 1;
+                    }
+                }
+                else if (currentPlayer == 2 && bot2?.Health <= 0)
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+                else if (currentPlayer == 1 && bot2?.Health <= 0)
+                {
+
+                    if ((currentPlayer % 2) + 1 == 2)
+                    {
+                        currentPlayer = 3;
+                    }
+                }
 
 
                 // Declare the winner
@@ -1256,7 +843,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                 repeatShop:
@@ -1287,12 +873,8 @@ namespace Myspace
 
                 Console.WriteLine("Current player: " + currentPlayer);
 
-                if (currentPlayer == 2)
+                if (currentPlayer == 1)
                 {
-                    if (bot1?.Health <= 0)
-                    {
-                        currentPlayer = 3;
-                    }
                     if (countBot1 == 3)
                     {
                         action = 1;
@@ -1306,51 +888,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceMage(bot1);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot1.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot1, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot1.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot1, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot1, player, roundBot1);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot1.ResistanceToPhysical += 5;
-                        bot1.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot1);
                         PrintManager.printDefendsBot(bot1);
                         countBot1++;
                         Console.WriteLine();
@@ -1358,13 +902,8 @@ namespace Myspace
                     }
                 }
 
-                else if (currentPlayer == 3)
+                else if (currentPlayer == 2)
                 {
-                    if (bot2?.Health <= 0)
-                    {
-                        currentPlayer = 2;
-                    }
-
                     if (countBot2 == 3)
                     {
                         action = 1;
@@ -1378,58 +917,20 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceArcher(bot2);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot2.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot2, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot2.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot2, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot2, player, roundBot2);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot2.ResistanceToPhysical += 5;
-                        bot2.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot2);
                         PrintManager.printDefendsBot(bot2);
                         countBot2++;
                         Console.WriteLine();
                     }
                 }
 
-                else
+                else if (currentPlayer == 3) 
                 {
                 // Choose the action for the current player
                 repeat1:
@@ -1487,57 +988,8 @@ namespace Myspace
                                 goto repeat2;
                             }
 
-                            if (AttackType == 1)
-                            {
-                                selectedAttack = Attack.Physical;
-                            }
-                            else
-                            {
-                                selectedAttack = Attack.Magical;
-                            }
-
-                            // Calculate the damage dealt by the current player
-
-                            if (selectedAttack == Attack.Physical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot1.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot1.ResistanceToPhysical;
-                                    roundPlayer.PhysicalDamage += damageDealt;
-                                    bot1.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot1, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
-
-
-                            else if (selectedAttack == Attack.Magical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot1.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot1.ResistanceToMagical;
-                                    roundPlayer.MagicDamage += damageDealt;
-                                    bot1.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot1, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
+                            selectedAttack = PrintManager.printAttackType(AttackType);
+                            PrintManager.printActionPlayer(selectedAttack, player, bot1, roundPlayer);
                         }
 
                         else if (action == 2) // Defend
@@ -1548,9 +1000,7 @@ namespace Myspace
                                 Console.WriteLine("You have reached the limit");
                                 goto repeat1;
                             }
-
-                            player.ResistanceToPhysical += 5;
-                            player.ResistanceToMagical += 5;
+                            PrintManager.printDefend(player);
                             PrintManager.printDefendsPlayer1(player);
                             PrintManager.printStatistic(player);
                             Console.WriteLine();
@@ -1587,57 +1037,8 @@ namespace Myspace
                                 goto repeat2;
                             }
 
-                            if (AttackType == 1)
-                            {
-                                selectedAttack = Attack.Physical;
-                            }
-                            else
-                            {
-                                selectedAttack = Attack.Magical;
-                            }
-
-                            // Calculate the damage dealt by the current player
-
-                            if (selectedAttack == Attack.Physical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot2.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot2.ResistanceToPhysical;
-                                    roundPlayer.PhysicalDamage += damageDealt;
-                                    bot2.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot2, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
-
-
-                            else if (selectedAttack == Attack.Magical)
-                            {
-                                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                                if (damageDealt <= 0)
-                                {
-                                    bot2.Health -= damageDealt;
-                                }
-                                else if (damageDealt > 0)
-                                {
-                                    damageDealt -= bot2.ResistanceToMagical;
-                                    roundPlayer.MagicDamage += damageDealt;
-                                    bot2.Health -= damageDealt;
-                                }
-
-                                //Result
-                                PrintManager.printAttackPlayer1(player, bot2, damageDealt);
-                                PrintManager.printStatistic(player);
-                                Console.WriteLine();
-                            }
+                            selectedAttack = PrintManager.printAttackType(AttackType);
+                            PrintManager.printActionPlayer(selectedAttack, player, bot2, roundPlayer);
                         }
 
                         else if (action == 2) // Defend
@@ -1648,9 +1049,7 @@ namespace Myspace
                                 Console.WriteLine("You have reached the limit");
                                 goto repeat1;
                             }
-
-                            player.ResistanceToPhysical += 5;
-                            player.ResistanceToMagical += 5;
+                            PrintManager.printDefend(player);
                             PrintManager.printDefendsPlayer1(player);
                             PrintManager.printStatistic(player);
                             Console.WriteLine();
@@ -1660,7 +1059,49 @@ namespace Myspace
                 }
 
                 // Switch to the next player
-                currentPlayer = (currentPlayer % 3) + 1;
+                if (bot1?.Health > 0 && bot2?.Health > 0)
+                {
+                    currentPlayer = (currentPlayer % 3) + 1;
+                }
+
+                else if ((currentPlayer == 1 && bot1?.Health <= 0) || (currentPlayer == 2 && bot2?.Health <= 0))
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+
+                else if (currentPlayer == 3 && bot1?.Health <= 0)
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+                else if (currentPlayer == 2 && bot1?.Health <= 0)
+                {
+                    if ((currentPlayer % 2) + 1 == 1)
+                    {
+                        currentPlayer = 3;
+                    }
+                }
+
+               
+
+                else if (currentPlayer == 3 && bot2?.Health <= 0)
+                {
+                    if ((currentPlayer % 2) + 1 == 2)
+                    {
+                        currentPlayer = 1;
+                    }
+                }
+                else if (currentPlayer == 2 && bot2?.Health <= 0)
+                {
+                    currentPlayer = (currentPlayer % 2) + 1;
+                }
+                else if (currentPlayer == 1 && bot2?.Health <= 0)
+                {
+
+                    if ((currentPlayer % 2) + 1 == 2)
+                    {
+                        currentPlayer = 3;
+                    }
+                }
 
 
                 // Declare the winner
@@ -1697,7 +1138,6 @@ namespace Myspace
                 int action;
                 int AttackType;
                 Attack selectedAttack;
-                double damageDealt;
                 if (countShop == 5)
                 {
                     PrintManager.ShopMenuBot(player, bot);
@@ -1721,50 +1161,13 @@ namespace Myspace
                     {
                         selectedAttack = BotLogic.botLogicChoiceBoss();
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToPhysical;
-                                roundBot.PhysicalDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player.ResistanceToMagical;
-                                roundBot.MagicDamage += damageDealt;
-                                player.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot(player, bot, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printActionBot(selectedAttack, bot, player, roundBot);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-                        bot.ResistanceToPhysical += 5;
-                        bot.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot);
                         PrintManager.printDefendsBot(bot);
                         countBot++;
                         Console.WriteLine();
@@ -1803,57 +1206,8 @@ namespace Myspace
                             goto repeat2;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
-
-                        // Calculate the damage dealt by the current player
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToPhysical;
-                                roundPlayer.PhysicalDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot.ResistanceToMagical;
-                                roundPlayer.MagicDamage += damageDealt;
-                                bot.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player, bot, damageDealt);
-                            PrintManager.printStatistic(player);
-                            Console.WriteLine();
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
+                        PrintManager.printActionPlayer(selectedAttack, player, bot, roundPlayer);
                     }
 
                     else if (action == 2) // Defend
@@ -1864,9 +1218,7 @@ namespace Myspace
                             Console.WriteLine("You have reached the limit");
                             goto repeat1;
                         }
-
-                        player.ResistanceToPhysical += 5;
-                        player.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player);
                         PrintManager.printDefendsPlayer1(player);
                         PrintManager.printStatistic(player);
                         Console.WriteLine();

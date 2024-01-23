@@ -1,4 +1,7 @@
-﻿namespace Myspace
+﻿using System.Numerics;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace Myspace
 {
     static class PrintManager
     {
@@ -238,7 +241,7 @@
             Console.WriteLine($"{bot2.Name} Health {bot2.Health}", Console.ForegroundColor = ConsoleColor.Green); Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public static void printAttackBot2(Hero bot1, Hero bot2, double damageDealt)
+        public static void printAttackBot2(Hero bot2, Hero bot1, double damageDealt)
         {
             Console.WriteLine($"Bot2 {bot2.Name} attacks {bot1.Name} for {damageDealt} damage.", Console.ForegroundColor = ConsoleColor.Red);
             Console.WriteLine($"{bot1.Name} Health {bot1.Health}", Console.ForegroundColor = ConsoleColor.Green); Console.ForegroundColor = ConsoleColor.White;
@@ -275,6 +278,338 @@
             {
                 Console.WriteLine($"Player: has won the battle! with character {player.Name}", Console.ForegroundColor = ConsoleColor.Yellow);
                 Console.WriteLine($"All Physical Damage: {roundPlayer.PhysicalDamage} All Magical Damage {roundPlayer.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red);
+
+                Console.WriteLine($"All Physical Damage Bot1: {roundBot1.PhysicalDamage} All Magical Damage Bot1: {roundBot1.MagicDamage}, All Physical Damage Bot2: {roundBot2.PhysicalDamage} All Magical Damage Bot2: {roundBot2.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red); Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+
+
+        public static Attack printAttackType(int AttackType)
+        {
+            Attack selectedAttack;
+            if (AttackType == 1)
+            {
+                selectedAttack = Attack.Physical;
+            }
+            else
+            {
+                selectedAttack = Attack.Magical;
+            }
+            return selectedAttack;
+
+        }
+
+        public static void printAction1(Attack selectedAttack, Hero player1, Hero player2, Round round1)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = player1.AttackPow(selectedAttack, player1.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player2.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player2.ResistanceToPhysical;
+                    round1.PhysicalDamage += damageDealt;
+                    player2.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer1(player1, player2, damageDealt);
+                Console.WriteLine();
+            }
+
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = player1.AttackPow(selectedAttack, player1.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player2.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player2.ResistanceToMagical;
+                    round1.MagicDamage += damageDealt;
+                    player2.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer1(player1, player2, damageDealt);
+                Console.WriteLine();
+            }
+        }
+
+        public static void printAction2(Attack selectedAttack, Hero player1, Hero player2, Round round2)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = player2.AttackPow(selectedAttack, player2.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player1.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player1.ResistanceToPhysical;
+                    round2.PhysicalDamage += damageDealt;
+                    player1.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer2(player1, player2, damageDealt);
+                Console.WriteLine();
+            }
+
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = player2.AttackPow(selectedAttack, player2.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player1.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player1.ResistanceToMagical;
+                    round2.MagicDamage += damageDealt;
+                    player1.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer2(player1, player2, damageDealt);
+                Console.WriteLine();
+            }
+        }
+
+        public static void printDefend(Hero player)
+        {
+            player.ResistanceToPhysical += 5;
+            player.ResistanceToMagical += 5;
+        }
+
+
+
+        public static Attack printAttackTypeBot(Hero bot,Mage mage,Hero archer) {
+            Attack selectedAttack;
+            if (bot == mage)
+            {
+                selectedAttack = BotLogic.botLogicChoiceMage(bot);
+            }
+            else if (bot == archer)
+            {
+                selectedAttack = BotLogic.botLogicChoiceArcher(bot);
+            }
+            else
+            {
+                selectedAttack = BotLogic.botLogicChoiceWarrior(bot);
+            }
+            return selectedAttack;
+        }
+
+        public static void printActionBot(Attack selectedAttack, Hero bot, Hero player, Round roundBot)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player.ResistanceToPhysical;
+                    roundBot.PhysicalDamage += damageDealt;
+                    player.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot(player, bot, damageDealt);
+                Console.WriteLine();
+            }
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = bot.AttackPow(selectedAttack, bot.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    player.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= player.ResistanceToMagical;
+                    roundBot.MagicDamage += damageDealt;
+                    player.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot(player, bot, damageDealt);
+                Console.WriteLine();
+            }
+        }
+
+
+
+        public static void printActionBot1(Attack selectedAttack, Hero bot1, Hero bot2, Round roundBot1)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot2.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot2.ResistanceToPhysical;
+                    roundBot1.PhysicalDamage += damageDealt;
+                    bot2.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot1(bot1, bot2, damageDealt);
+                Console.WriteLine();
+            }
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot2.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot2.ResistanceToMagical;
+                    roundBot1.MagicDamage += damageDealt;
+                    bot2.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot1(bot1, bot2, damageDealt);
+                Console.WriteLine();
+            }
+        }
+
+        public static void printActionBot2(Attack selectedAttack, Hero bot2, Hero bot1, Round roundBot2)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot1.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot1.ResistanceToPhysical;
+                    roundBot2.PhysicalDamage += damageDealt;
+                    bot1.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot2(bot2, bot1, damageDealt);
+                Console.WriteLine();
+            }
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot1.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot1.ResistanceToMagical;
+                    roundBot2.MagicDamage += damageDealt;
+                    bot1.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackBot2(bot2, bot1, damageDealt);
+                Console.WriteLine();
+            }
+        }
+
+
+        public static void printActionPlayer(Attack selectedAttack, Hero player, Hero bot, Round roundPlayer)
+        {
+            double damageDealt;
+            if (selectedAttack == Attack.Physical)
+            {
+                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot.ResistanceToPhysical;
+                    roundPlayer.PhysicalDamage += damageDealt;
+                    bot.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer1(player, bot, damageDealt);
+                printStatistic(player);
+                Console.WriteLine();
+            }
+
+
+            else if (selectedAttack == Attack.Magical)
+            {
+                damageDealt = player.AttackPow(selectedAttack, player.AttackPower);
+                if (damageDealt <= 0)
+                {
+                    bot.Health -= damageDealt;
+                }
+                else if (damageDealt > 0)
+                {
+                    damageDealt -= bot.ResistanceToMagical;
+                    roundPlayer.MagicDamage += damageDealt;
+                    bot.Health -= damageDealt;
+                }
+
+                //Result
+                printAttackPlayer1(player, bot, damageDealt);
+                printStatistic(player);
+                Console.WriteLine();
+            }
+        }
+
+
+
+
+        public static void printChoseBot1()
+        {
+            Console.WriteLine("Bot1: mage - 1,archer - 2,warrior - 3");
+        }
+
+        public static void printChoseBot2()
+        {
+            Console.WriteLine("Bot2: mage - 1,archer - 2,warrior - 3");
+        }
+
+        public static void printWinnerPlayerWithPlayerVSBotAndBot(Hero player1, Hero player2, Hero bot1, Hero bot2, Round roundPlayer1, Round roundPlayer2, Round roundBot1, Round roundBot2)
+        {
+            if (player1.Health <= 0 && player2.Health <= 0)
+            {
+                Console.WriteLine($"Bots: have won the battle! with characters: Bot1: {bot1.Name}, Bot2: {bot2.Name}", Console.ForegroundColor = ConsoleColor.Yellow);
+                Console.WriteLine($"All Physical Damage Bot1: {roundBot1.PhysicalDamage} All Magical Damage Bot1: {roundBot1.MagicDamage}, All Physical Damage Bot2: {roundBot2.PhysicalDamage} All Magical Damage Bot2: {roundBot2.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red);
+
+                Console.WriteLine($"Player1: All Physical Damage: {roundPlayer1.PhysicalDamage} All Magical Damage {roundPlayer1.MagicDamage}, Player2: All Physical Damage: {roundPlayer2.PhysicalDamage} All Magical Damage {roundPlayer2.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (bot1.Health <= 0 && bot2.Health <= 0)
+            {
+                Console.WriteLine($"Players: have won the battle! with characters: Player1: {player1.Name}, Player2: {player2.Name}", Console.ForegroundColor = ConsoleColor.Yellow);
+                Console.WriteLine($"All Physical Damage Player1: {roundPlayer1.PhysicalDamage} All Magical Damage {roundPlayer1.MagicDamage}, All Physical Damage Player2: {roundPlayer2.PhysicalDamage} All Magical Damage {roundPlayer2.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red);
 
                 Console.WriteLine($"All Physical Damage Bot1: {roundBot1.PhysicalDamage} All Magical Damage Bot1: {roundBot1.MagicDamage}, All Physical Damage Bot2: {roundBot2.PhysicalDamage} All Magical Damage Bot2: {roundBot2.MagicDamage}", Console.ForegroundColor = ConsoleColor.Red); Console.ForegroundColor = ConsoleColor.White;
             }

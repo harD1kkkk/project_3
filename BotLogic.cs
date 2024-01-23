@@ -246,5 +246,107 @@ namespace Myspace
                 bot.AttackPower += 10;
             }
         }
+
+
+
+        public static int choosePlayer(Hero? player1, Hero? player2, Hero? bot)
+        {
+            int choice = 1;
+
+
+            if (player1?.Health <= 0)
+            {
+                choice = 2;
+                return choice;
+            }
+            else if (player2?.Health <= 0)
+            {
+                choice = 1;
+                return choice;
+            }
+
+
+
+            if (player1?.Health > player2?.Health)
+            {
+                choice = 2;
+                return choice;
+            }
+            else if (player2?.Health > player1?.Health)
+            {
+                choice = 1;
+                return choice;
+            }
+
+            else if (player1?.Health == player2?.Health)
+            {
+                if ((player1?.ResistanceToPhysical < player2?.ResistanceToPhysical) && (player1.ResistanceToMagical < player2.ResistanceToMagical))
+                {
+                    choice = 1;
+                    return choice;
+                }
+                else if ((player1?.ResistanceToPhysical > player2?.ResistanceToPhysical) && (player1.ResistanceToMagical > player2.ResistanceToMagical))
+                {
+                    choice = 2;
+                    return choice;
+                }
+                else
+                {
+                    Random botChoicePlayer = new();
+                    int botchoiceplayer = botChoicePlayer.Next(1, 101);
+                    if (botchoiceplayer <= 50)
+                    {
+                        choice = 1;
+                        return choice;
+                    }
+                    else
+                    {
+                        choice = 2;
+                        return choice;
+                    }
+                }
+            }
+            return choice;
+        }
+
+
+        public static int botLogicBotVSPlayerVsPlayer(Hero player1, Hero player2, Hero bot)
+        {
+            int action;
+            if (bot.Health >= 200 && player1.Health < bot.Health && player2.Health < bot.Health)
+            {
+                Random botChoiceAction = new();
+                int botchoiceaction = botChoiceAction.Next(1, 3);
+
+                if (botchoiceaction == 1)
+                {
+                    action = 1;
+                }
+
+                else
+                {
+                    action = 2;
+                }
+            }
+            else if (bot.Health <= 100 || player1.Health > bot.Health || player2.Health > bot.Health)
+            {
+                Random botChoiceAction2 = new();
+                int botchoiceaction2 = botChoiceAction2.Next(1, 101);
+                if (botchoiceaction2 <= 80)
+                {
+                    action = 1;
+                }
+                else
+                {
+                    action = 2;
+                }
+            }
+            else if (player1.Health <= 50 || player2.Health <= 50 || bot.Health <= 50)
+            {
+                action = 1;
+            }
+            else { action = 1; }
+            return action;
+        }
     }
 }

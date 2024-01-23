@@ -147,7 +147,6 @@ namespace Myspace
 
             while (player1?.Health > 0 && player2?.Health > 0)
             {
-                double damageDealt;
                 Attack selectedAttack;
                 if (countShop == 5)
                 {
@@ -185,55 +184,9 @@ namespace Myspace
                             goto repeat5;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
 
-
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player1.AttackPow(selectedAttack, player1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player2.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player2.ResistanceToPhysical;
-                                round1.PhysicalDamage += damageDealt;
-                                player2.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player1, player2, damageDealt);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player1.AttackPow(selectedAttack, player1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player2.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player2.ResistanceToMagical;
-                                round1.MagicDamage += damageDealt;
-                                player2.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer1(player1, player2, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printAction1(selectedAttack, player1, player2, round1);
                     }
 
                     else if (action == 2) // Defend
@@ -244,8 +197,7 @@ namespace Myspace
                             Console.WriteLine("You have reached the limit");
                             goto repeat4;
                         }
-                        player1.ResistanceToPhysical += 5;
-                        player1.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player1);
                         PrintManager.printDefendsPlayer1(player1);
                         count1++;
                         Console.WriteLine();
@@ -280,53 +232,9 @@ namespace Myspace
                             goto repeat7;
                         }
 
-                        if (AttackType == 1)
-                        {
-                            selectedAttack = Attack.Physical;
-                        }
-                        else
-                        {
-                            selectedAttack = Attack.Magical;
-                        }
+                        selectedAttack = PrintManager.printAttackType(AttackType);
 
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = player2.AttackPow(selectedAttack, player2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player1.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player1.ResistanceToPhysical;
-                                round2.PhysicalDamage += damageDealt;
-                                player1.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer2(player1, player2, damageDealt);
-                            Console.WriteLine();
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = player2.AttackPow(selectedAttack, player2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                player1.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= player1.ResistanceToMagical;
-                                round2.MagicDamage += damageDealt;
-                                player1.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackPlayer2(player1, player2, damageDealt);
-                            Console.WriteLine();
-                        }
+                        PrintManager.printAction2(selectedAttack, player1, player2, round2);
                     }
 
                     else if (action == 2) // Defend
@@ -337,8 +245,7 @@ namespace Myspace
                             Console.WriteLine("You have reached the limit");
                             goto repeat6;
                         }
-                        player2.ResistanceToPhysical += 5;
-                        player2.ResistanceToMagical += 5;
+                        PrintManager.printDefend(player2);
                         PrintManager.printDefendsPlayer2(player2);
                         count2++;
                         Console.WriteLine();

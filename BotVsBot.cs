@@ -1,4 +1,6 @@
-﻿namespace Myspace
+﻿using System.Numerics;
+
+namespace Myspace
 {
     static class BotVsBot
     {
@@ -91,7 +93,6 @@
             {
                 int action;
                 Attack selectedAttack;
-                double damageDealt;
 
                 if (countShop == 5)
                 {
@@ -127,73 +128,20 @@
 
                     if (action == 1)
                     {
-                        if (bot1 == mage1)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceMage(bot1);
-                        }
-                        else if (bot1 == archer1)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceArcher(bot1);
-
-                        }
-                        else
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceWarrior(bot1);
-                        }
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot2.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot2.ResistanceToPhysical;
-                                roundBot1.PhysicalDamage += damageDealt;
-                                bot2.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot1(bot1, bot2, damageDealt);
-                            Console.WriteLine();
-                            System.Threading.Thread.Sleep(1000);
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot1.AttackPow(selectedAttack, bot1.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot2.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot2.ResistanceToMagical;
-                                roundBot1.MagicDamage += damageDealt;
-                                bot2.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot1(bot1, bot2, damageDealt);
-                            Console.WriteLine();
-                            System.Threading.Thread.Sleep(1000);
-                        }
+                        selectedAttack = PrintManager.printAttackTypeBot(bot1, mage1, archer1);
+                        PrintManager.printActionBot1(selectedAttack, bot1, bot2, roundBot1);
+                        System.Threading.Thread.Sleep(1000);
                     }
+
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot1.ResistanceToPhysical += 5;
-                        bot1.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot1);
                         PrintManager.printDefendsBot(bot1);
                         countBot1++;
                         Console.WriteLine();
                         System.Threading.Thread.Sleep(1000);
-
                     }
                 }
 
@@ -210,68 +158,15 @@
 
                     if (action == 1)
                     {
-                        if (bot2 == mage2)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceMage(bot2);
-                        }
-                        else if (bot2 == archer2)
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceArcher(bot2);
-
-                        }
-                        else
-                        {
-                            selectedAttack = BotLogic.botLogicChoiceWarrior(bot2);
-                        }
-
-                        if (selectedAttack == Attack.Physical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot1.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot1.ResistanceToPhysical;
-                                roundBot2.PhysicalDamage += damageDealt;
-                                bot1.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot2(bot1, bot2, damageDealt);
-                            Console.WriteLine();
-                            System.Threading.Thread.Sleep(1000);
-                        }
-
-
-                        else if (selectedAttack == Attack.Magical)
-                        {
-                            damageDealt = bot2.AttackPow(selectedAttack, bot2.AttackPower);
-                            if (damageDealt <= 0)
-                            {
-                                bot1.Health -= damageDealt;
-                            }
-                            else if (damageDealt > 0)
-                            {
-                                damageDealt -= bot1.ResistanceToMagical;
-                                roundBot2.MagicDamage += damageDealt;
-                                bot1.Health -= damageDealt;
-                            }
-
-                            //Result
-                            PrintManager.printAttackBot2(bot1, bot2, damageDealt);
-                            Console.WriteLine();
-                            System.Threading.Thread.Sleep(1000);
-                        }
+                        selectedAttack = PrintManager.printAttackTypeBot(bot2, mage2, archer2);
+                        PrintManager.printActionBot2(selectedAttack, bot2, bot1, roundBot2);
+                        System.Threading.Thread.Sleep(1000);
                     }
 
                     else if (action == 2) // Defend
                     {
                         // Increase the resistance of the Bot
-
-                        bot2.ResistanceToPhysical += 5;
-                        bot2.ResistanceToMagical += 5;
+                        PrintManager.printDefend(bot2);
                         PrintManager.printDefendsBot(bot2);
                         countBot2++;
                         Console.WriteLine();
