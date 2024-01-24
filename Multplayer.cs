@@ -91,55 +91,100 @@ namespace Myspace
             }
             Console.WriteLine();
 
-      
-            //дописати
 
-
-        repeat3:
-            PrintManager.printChoseBot1();
-            if (Int32.TryParse(Console.ReadLine(), out int playerChoice1) == false || playerChoice1 == 0 || playerChoice1 > 3)
+        repeatChoiceBot:
+            Console.WriteLine("Chose bot: random - 1 or choose your own - 2");
+            if (Int32.TryParse(Console.ReadLine(), out int BotChoice) == false || BotChoice == 0 || BotChoice > 2)
             {
                 Console.WriteLine("Error.You entered an incorrect value");
-                goto repeat3;
+                goto repeatChoiceBot;
             }
-            switch (playerChoice1)
+            if (BotChoice == 1)
             {
-                case 1:
-                    Console.WriteLine("Choosed mage");
-                    bot1 = Botmage1;
-                    break;
-                case 2:
-                    Console.WriteLine("Choosed Archer");
-                    bot1 = Botarcher1;
-                    break;
-                case 3:
-                    Console.WriteLine("Choosed Warrior");
-                    bot1 = Botwarrior1;
-                    break;
+                Random botChoice = new();
+                int botchoice = botChoice.Next(1, 4);
+                switch (botchoice)
+                {
+                    case 1:
+                        Console.WriteLine("Bot1: Choosed Mage");
+                        bot1 = Botmage1;
+                        break;
+                    case 2:
+                        Console.WriteLine("Bot1: Choosed Archer");
+                        bot1 = Botarcher1;
+                        break;
+                    case 3:
+                        Console.WriteLine("Bot1: Choosed Warrior");
+                        bot1 = Botwarrior1;
+                        break;
+                }
+                Random botChoice1 = new();
+                int botchoice1 = botChoice1.Next(1, 4);
+                switch (botchoice1)
+                {
+                    case 1:
+                        Console.WriteLine("Bot: Choosed Mage");
+                        bot2 = Botmage2;
+                        break;
+                    case 2:
+                        Console.WriteLine("Bot: Choosed Archer");
+                        bot2 = Botarcher2;
+                        break;
+                    case 3:
+                        Console.WriteLine("Bot: Choosed Warrior");
+                        bot2 = Botwarrior2;
+                        break;
+                }
             }
+            else
+            {
 
-        repeat4:
-            PrintManager.printChoseBot2();
-            if (Int32.TryParse(Console.ReadLine(), out int playerChoice2) == false || playerChoice2 == 0 || playerChoice2 > 3)
-            {
-                Console.WriteLine("Error.You entered an incorrect value");
-                goto repeat4;
-            }
+            repeat3:
+                PrintManager.printChoseBot1();
+                if (Int32.TryParse(Console.ReadLine(), out int playerChoice1) == false || playerChoice1 == 0 || playerChoice1 > 3)
+                {
+                    Console.WriteLine("Error.You entered an incorrect value");
+                    goto repeat3;
+                }
+                switch (playerChoice1)
+                {
+                    case 1:
+                        Console.WriteLine("Choosed mage");
+                        bot1 = Botmage1;
+                        break;
+                    case 2:
+                        Console.WriteLine("Choosed Archer");
+                        bot1 = Botarcher1;
+                        break;
+                    case 3:
+                        Console.WriteLine("Choosed Warrior");
+                        bot1 = Botwarrior1;
+                        break;
+                }
 
-            switch (playerChoice2)
-            {
-                case 1:
-                    Console.WriteLine("Choosed mage");
-                    bot2 = Botmage2;
-                    break;
-                case 2:
-                    Console.WriteLine("Choosed Archer");
-                    bot2 = Botarcher2;
-                    break;
-                case 3:
-                    Console.WriteLine("Choosed Warrior");
-                    bot2 = Botwarrior2;
-                    break;
+            repeat4:
+                PrintManager.printChoseBot2();
+                if (Int32.TryParse(Console.ReadLine(), out int playerChoice2) == false || playerChoice2 == 0 || playerChoice2 > 3)
+                {
+                    Console.WriteLine("Error.You entered an incorrect value");
+                    goto repeat4;
+                }
+
+                switch (playerChoice2)
+                {
+                    case 1:
+                        Console.WriteLine("Choosed mage");
+                        bot2 = Botmage2;
+                        break;
+                    case 2:
+                        Console.WriteLine("Choosed Archer");
+                        bot2 = Botarcher2;
+                        break;
+                    case 3:
+                        Console.WriteLine("Choosed Warrior");
+                        bot2 = Botwarrior2;
+                        break;
+                }
             }
 
 
